@@ -18,7 +18,7 @@ trait TestCaseTrait
         // $this->cleanUp();
         // $this->publish();
         // $this->clearCaches();
-        // $this->migrate();
+        $this->migrate();
     }
 
     /**
@@ -26,7 +26,7 @@ trait TestCaseTrait
      */
     protected function tearDown(): void
     {
-        // $this->cleanUp();
+        $this->cleanUp();
         parent::tearDown();
     }
 
@@ -46,6 +46,7 @@ trait TestCaseTrait
     public function migrate()
     {
         $this->loadLaravelMigrations(['--database' => 'testbench']);
+        $this->artisan('vendor:publish', ['--tag' => 'laravel-expiry-migrations']);
         $this->artisan('migrate', ['--database' => 'testbench']);
     }
 
@@ -55,7 +56,7 @@ trait TestCaseTrait
     public function cleanUp()
     {
         $this->removeMigrationFiles();
-        $this->removeSeederFiles();
+        // $this->removeSeederFiles();
         // $this->removeIfExist(config_path('config.php'));
     }
 
