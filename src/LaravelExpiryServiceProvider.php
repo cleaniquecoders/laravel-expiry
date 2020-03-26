@@ -11,6 +11,9 @@ class LaravelExpiryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../database/migrations/' => database_path('migrations')
+        ], 'laravel-expiry-migrations');
     }
 
     /**
