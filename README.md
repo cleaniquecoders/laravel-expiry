@@ -27,6 +27,13 @@ $ php artisan migrate
 'password.expiry' => \CleaniqueCoders\LaravelExpiry\Http\Middleware\PasswordExpiry::class,
 ```
 
+4. Now you may use the middleware in your application:
+
+```php 
+Route::middleware(['account.expiry', 'password.expiry'])
+	->get('/somewhere-not-expired');
+```
+
 ## Usage
 
 ## Test
