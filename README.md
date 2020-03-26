@@ -1,7 +1,7 @@
 
 [![Build Status](https://travis-ci.org/cleaniquecoders/laravel-expiry.svg?branch=master)](https://travis-ci.org/cleaniquecoders/laravel-expiry) [![Latest Stable Version](https://poser.pugx.org/cleaniquecoders/laravel-expiry/v/stable)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![Total Downloads](https://poser.pugx.org/cleaniquecoders/laravel-expiry/downloads)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![License](https://poser.pugx.org/cleaniquecoders/laravel-expiry/license)](https://packagist.org/packages/cleaniquecoders/laravel-expiry)
 
-## Laravel Expriy
+## Laravel Expiry
 
 Enable expiry on user's account and user's password.
 
