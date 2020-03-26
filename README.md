@@ -1,28 +1,30 @@
 
-[![Build Status](https://travis-ci.org/cleanique-coders/laravel-expiry.svg?branch=master)](https://travis-ci.org/cleanique-coders/laravel-expiry) [![Latest Stable Version](https://poser.pugx.org/cleanique-coders/laravel-expiry/v/stable)](https://packagist.org/packages/cleanique-coders/laravel-expiry) [![Total Downloads](https://poser.pugx.org/cleanique-coders/laravel-expiry/downloads)](https://packagist.org/packages/cleanique-coders/laravel-expiry) [![License](https://poser.pugx.org/cleanique-coders/laravel-expiry/license)](https://packagist.org/packages/cleanique-coders/laravel-expiry)
+[![Build Status](https://travis-ci.org/cleaniquecoders/laravel-expiry.svg?branch=master)](https://travis-ci.org/cleaniquecoders/laravel-expiry) [![Latest Stable Version](https://poser.pugx.org/cleaniquecoders/laravel-expiry/v/stable)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![Total Downloads](https://poser.pugx.org/cleaniquecoders/laravel-expiry/downloads)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![License](https://poser.pugx.org/cleaniquecoders/laravel-expiry/license)](https://packagist.org/packages/cleaniquecoders/laravel-expiry)
 
-## About Your Package
+## Laravel Expriy
 
-Tell people about your package
+Enable expiry on user's account and user's password.
 
 ## Installation
 
-1. In order to install `cleanique-coders/laravel-expiry` in your Laravel project, just run the *composer require* command from your terminal:
+1. In order to install `cleaniquecoders/laravel-expiry` in your Laravel project, just run the *composer require* command from your terminal:
 
 ```
-$ composer require cleanique-coders/laravel-expiry
+$ composer require cleaniquecoders/laravel-expiry
 ```
 
-2. Then in your `config/app.php` add the following to the providers array:
+2. Then publish and run the migration files:
 
-```php
-CleaniqueCoders\LaravelExpiry\LaravelExpiryServiceProvider::class,
+```
+$ php artisan vendor:publish --tag=laravel-expiry-migrations
+$ php artisan migrate
 ```
 
-3. In the same `config/app.php` add the following to the aliases array:
+3. Register route middlewares in `app/Http/Kernel.php`:
 
-```php
-'LaravelExpiry' => CleaniqueCoders\LaravelExpiry\LaravelExpiryFacade::class,
+```php 
+'account.expiry' => \CleaniqueCoders\LaravelExpiry\Http\Middleware\AccountExpiry::class,
+'password.expiry' => \CleaniqueCoders\LaravelExpiry\Http\Middleware\PasswordExpiry::class,
 ```
 
 ## Usage
@@ -37,7 +39,7 @@ $ vendor/bin/phpunit  --testdox --verbose
 
 ## Contributing
 
-Thank you for considering contributing to the `cleanique-coders/laravel-expiry`!
+Thank you for considering contributing to the `cleaniquecoders/laravel-expiry`!
 
 ### Bug Reports
 
@@ -49,7 +51,7 @@ Remember, bug reports are created in the hope that others with the same problem 
 
 ## Coding Style
 
-`cleanique-coders/laravel-expiry` follows the PSR-2 coding standard and the PSR-4 autoloading standard. 
+`cleaniquecoders/laravel-expiry` follows the PSR-2 coding standard and the PSR-4 autoloading standard. 
 
 You may use PHP CS Fixer in order to keep things standardised. PHP CS Fixer configuration can be found in `.php_cs`.
 
