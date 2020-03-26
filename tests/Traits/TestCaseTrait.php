@@ -3,6 +3,7 @@
 namespace CleaniqueCoders\LaravelExpiry\Tests\Traits;
 
 use Illuminate\Support\Facades\Schema;
+use PHPUnit\Framework\Assert;
 
 trait TestCaseTrait
 {
@@ -16,7 +17,7 @@ trait TestCaseTrait
         parent::setUp();
         // $this->loadFactories();
         // $this->cleanUp();
-        // $this->publish();
+        $this->publish();
         // $this->clearCaches();
         $this->migrate();
     }
@@ -46,7 +47,6 @@ trait TestCaseTrait
     public function migrate()
     {
         $this->loadLaravelMigrations(['--database' => 'testbench']);
-        $this->artisan('vendor:publish', ['--tag' => 'laravel-expiry-migrations']);
         $this->artisan('migrate', ['--database' => 'testbench']);
     }
 
@@ -118,10 +118,9 @@ trait TestCaseTrait
      */
     public function publish()
     {
-        // $this->artisan('vendor:publish', [
-        //     '--force' => true,
-        //     '--tag'   => 'config',
-        // ]);
+        $this->artisan('vendor:publish', [
+            '--tag' => 'laravel-expiry-migrations',
+        ]);
     }
 
     /**
