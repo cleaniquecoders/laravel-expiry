@@ -16,6 +16,9 @@ class AccountExpiry
     public function handle($request, Closure $next)
     {
         if (now()->greaterThan(auth()->user()->account_expired_at)) {
+            event(
+                new \CleaniqueCoders\LaravelExpiry\Events\ExpiredAccount(auth()->user())
+            );
             auth()->logout();
 
             throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredAccountException();

@@ -2,10 +2,12 @@
 
 namespace CleaniqueCoders\LaravelExpiry\Tests\Unit;
 
+use CleaniqueCoders\LaravelExpiry\Events\ExpiredAccount;
 use CleaniqueCoders\LaravelExpiry\Http\Middleware\AccountExpiry;
 use CleaniqueCoders\LaravelExpiry\Tests\Stubs\Models\User;
 use CleaniqueCoders\LaravelExpiry\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 
 class AccountExpiredTest extends TestCase
 {
@@ -16,6 +18,27 @@ class AccountExpiredTest extends TestCase
     {
         $this->assertHasTable('users');
         $this->assertTableHasColumns('users', ['account_expired_at']);
+    }
+
+    /** @test */
+    public function it_trigger_expired_account_event_when_account_expired()
+    {
+        Event::fake();
+
+        $user = User::create([
+            'name'               => 'Expired Account',
+            'email'              => 'expired@account.com',
+            'password'           => 'password',
+            'account_expired_at' => '2020-01-01 00:00:00',
+        ]);
+
+        $this->actingAs($user);
+
+        $this->callMiddleware();
+
+        Event::assertDispatched(ExpiredAccount::class, function ($event) use ($user) {
+            return $event->user->id === $user->id;
+        });
     }
 
     /** @test */

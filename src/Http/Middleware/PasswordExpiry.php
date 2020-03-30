@@ -16,6 +16,9 @@ class PasswordExpiry
     public function handle($request, Closure $next)
     {
         if (now()->greaterThan(auth()->user()->password_expired_at)) {
+            event(
+                new \CleaniqueCoders\LaravelExpiry\Events\ExpiredPassword(auth()->user())
+            );
             auth()->logout();
 
             throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredPasswordException();
