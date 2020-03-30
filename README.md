@@ -36,6 +36,13 @@ Route::middleware(['account.expiry', 'password.expiry'])
 	->get('/somewhere-not-expired');
 ```
 
+You can listen to the following events on account and password expiry:
+
+```php
+use CleaniqueCoders\LaravelExpiry\Events\ExpiredAccount;
+use CleaniqueCoders\LaravelExpiry\Events\ExpiredPassword;
+```
+
 ## Test
 
 Run the following command:
