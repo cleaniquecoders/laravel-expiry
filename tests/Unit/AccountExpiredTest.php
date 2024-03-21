@@ -26,9 +26,9 @@ class AccountExpiredTest extends TestCase
         Event::fake();
 
         $user = User::create([
-            'name'               => 'Expired Account',
-            'email'              => 'expired@account.com',
-            'password'           => 'password',
+            'name' => 'Expired Account',
+            'email' => 'expired@account.com',
+            'password' => 'password',
             'account_expired_at' => '2020-01-01 00:00:00',
         ]);
 
@@ -45,9 +45,9 @@ class AccountExpiredTest extends TestCase
     public function auto_logout_on_account_expired()
     {
         $user = User::create([
-            'name'               => 'Expired Account',
-            'email'              => 'expired@account.com',
-            'password'           => 'password',
+            'name' => 'Expired Account',
+            'email' => 'expired@account.com',
+            'password' => 'password',
             'account_expired_at' => '2020-01-01 00:00:00',
         ]);
 

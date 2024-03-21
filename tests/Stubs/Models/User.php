@@ -7,7 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $guarded = ['id'];
-    protected $dates   = [
+
+    protected $dates = [
         'account_expired_at',
         'password_expired_at',
     ];
