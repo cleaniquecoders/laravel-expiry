@@ -12,8 +12,8 @@ class AddExpiryColumns extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->datetime('password_expired_at')->nullable()->after('password');
-            $table->datetime('account_expired_at')->nullable()->after('email_verified_at');
+            $table->dateTime('password_expired_at')->nullable()->after('password');
+            $table->dateTime('account_expired_at')->nullable()->after('email_verified_at');
         });
     }
 
