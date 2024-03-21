@@ -1,5 +1,7 @@
-
-[![Build Status](https://travis-ci.org/cleaniquecoders/laravel-expiry.svg?branch=master)](https://travis-ci.org/cleaniquecoders/laravel-expiry) [![Latest Stable Version](https://poser.pugx.org/cleaniquecoders/laravel-expiry/v/stable)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![Total Downloads](https://poser.pugx.org/cleaniquecoders/laravel-expiry/downloads)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![License](https://poser.pugx.org/cleaniquecoders/laravel-expiry/license)](https://packagist.org/packages/cleaniquecoders/laravel-expiry)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/cleaniquecoders/laravel-expiry.svg?style=flat-square)](https://packagist.org/packages/cleaniquecoders/laravel-expiry)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/cleaniquecoders/laravel-expiry/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/cleaniquecoders/laravel-expiry/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/cleaniquecoders/laravel-expiry/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/cleaniquecoders/laravel-expiry/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/cleaniquecoders/laravel-expiry.svg?style=flat-square)](https://packagist.org/packages/cleaniquecoders/laravel-expiry)
 
 ## Laravel Expiry
 
@@ -7,22 +9,22 @@ Enable expiry on user's account and user's password.
 
 ## Installation
 
-1. In order to install `cleaniquecoders/laravel-expiry` in your Laravel project, just run the *composer require* command from your terminal:
+In order to install `cleaniquecoders/laravel-expiry` in your Laravel project, just run the *composer require* command from your terminal:
 
-```
-$ composer require cleaniquecoders/laravel-expiry
-```
-
-2. Then publish and run the migration files:
-
-```
-$ php artisan vendor:publish --tag=laravel-expiry-migrations
-$ php artisan migrate
+```bash
+composer require cleaniquecoders/laravel-expiry
 ```
 
-3. Register route middlewares in `app/Http/Kernel.php`:
+Then publish and run the migration files:
 
-```php 
+```bash
+php artisan vendor:publish --tag=laravel-expiry-migrations
+php artisan migrate
+```
+
+Register route middlewares in `app/Http/Kernel.php`:
+
+```php
 'account.expiry' => \CleaniqueCoders\LaravelExpiry\Http\Middleware\AccountExpiry::class,
 'password.expiry' => \CleaniqueCoders\LaravelExpiry\Http\Middleware\PasswordExpiry::class,
 ```
@@ -31,9 +33,9 @@ $ php artisan migrate
 
 Now you may use the middleware in your application:
 
-```php 
+```php
 Route::middleware(['account.expiry', 'password.expiry'])
-	->get('/somewhere-not-expired');
+ ->get('/somewhere-not-expired');
 ```
 
 You can listen to the following events on account and password expiry:
@@ -47,8 +49,8 @@ use CleaniqueCoders\LaravelExpiry\Events\ExpiredPassword;
 
 Run the following command:
 
-```
-$ vendor/bin/phpunit  --testdox --verbose
+```bash
+vendor/bin/phpunit  --testdox --verbose
 ```
 
 ## Contributing
@@ -65,9 +67,7 @@ Remember, bug reports are created in the hope that others with the same problem 
 
 ## Coding Style
 
-`cleaniquecoders/laravel-expiry` follows the PSR-2 coding standard and the PSR-4 autoloading standard. 
-
-You may use PHP CS Fixer in order to keep things standardised. PHP CS Fixer configuration can be found in `.php_cs`.
+`cleaniquecoders/laravel-expiry` follows the PSR-2 coding standard and the PSR-4 autoloading standard.
 
 ## License
 
