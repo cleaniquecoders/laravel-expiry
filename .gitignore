@@ -1,7 +1,11 @@
-/vendor
-
-# PHPUnit
-.phpunit.result.cache
-
-# PHP CS Fixer
-.php_cs.cache
+.idea
+.phpunit.cache
+build
+composer.lock
+coverage
+docs
+phpunit.xml
+phpstan.neon
+testbench.yaml
+vendor
+node_modules
