@@ -1,71 +1,131 @@
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/cleaniquecoders/laravel-expiry.svg?style=flat-square)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![PHPStan](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/phpstan.yml/badge.svg)](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/phpstan.yml) [![run-tests](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/run-tests.yml) [![Fix PHP code style issues](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/fix-styling.yml/badge.svg)](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/fix-styling.yml) [![Total Downloads](https://img.shields.io/packagist/dt/cleaniquecoders/laravel-expiry.svg?style=flat-square)](https://packagist.org/packages/cleaniquecoders/laravel-expiry)
+# Laravel Expiry
 
-## Laravel Expiry
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/cleaniquecoders/laravel-expiry.svg?style=flat-square)](https://packagist.org/packages/cleaniquecoders/laravel-expiry) [![PHPStan](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/phpstan.yml/badge.svg)](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/phpstan.yml) [![Run Tests](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/run-tests.yml) [![Fix PHP Code Style Issues](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/fix-styling.yml/badge.svg)](https://github.com/cleaniquecoders/laravel-expiry/actions/workflows/fix-styling.yml) [![Total Downloads](https://img.shields.io/packagist/dt/cleaniquecoders/laravel-expiry.svg?style=flat-square)](https://packagist.org/packages/cleaniquecoders/laravel-expiry)
 
-Enable expiry on user's account and user's password.
+`cleaniquecoders/laravel-expiry` is a Laravel package that enables expiration for user accounts and passwords with seamless middleware and event-driven support.
+
+---
+
+## Features
+
+- **Account Expiry**: Middleware to check and handle expired accounts.
+- **Password Expiry**: Middleware to enforce password expiration policies.
+- **Event Listeners**: Automatically trigger events when accounts or passwords expire.
+
+---
 
 ## Installation
 
-In order to install `cleaniquecoders/laravel-expiry` in your Laravel project, just run the *composer require* command from your terminal:
+Install the package via Composer:
 
 ```bash
 composer require cleaniquecoders/laravel-expiry
 ```
 
-Then publish and run the migration files:
+Publish and run the migration files to add the necessary expiry columns:
 
 ```bash
 php artisan vendor:publish --tag=laravel-expiry-migrations
 php artisan migrate
 ```
 
-Register route middlewares in `app/Http/Kernel.php`:
+### Middleware Registration
 
-```php
-'account.expiry' => \CleaniqueCoders\LaravelExpiry\Http\Middleware\AccountExpiry::class,
-'password.expiry' => \CleaniqueCoders\LaravelExpiry\Http\Middleware\PasswordExpiry::class,
-```
+The package automatically registers the following middleware in your application:
+
+- **`account.expiry`**: Handles account expiry checks.
+- **`password.expiry`**: Handles password expiry checks.
+
+---
 
 ## Usage
 
-Now you may use the middleware in your application:
+### Apply Middleware
+
+Use the middleware in your routes to enforce expiry checks:
 
 ```php
-Route::middleware(['account.expiry', 'password.expiry'])
- ->get('/somewhere-not-expired');
+Route::middleware(['account.expiry', 'password.expiry'])->group(function () {
+    Route::get('/protected-route', [SomeController::class, 'index']);
+});
 ```
 
-You can listen to the following events on account and password expiry:
+### Event Listeners
+
+The package provides a configuration-driven approach to managing event listeners. By default, the following events and listeners are configured:
+
+#### Default Event-to-Listener Mapping
+
+The configuration (`config/laravel-expiry.php`) includes the following mappings:
 
 ```php
-use CleaniqueCoders\LaravelExpiry\Events\ExpiredAccount;
-use CleaniqueCoders\LaravelExpiry\Events\ExpiredPassword;
+'events' => [
+    \CleaniqueCoders\LaravelExpiry\Events\ExpiredAccount::class => [
+        \CleaniqueCoders\LaravelExpiry\Listeners\LogoutOnExpired::class,
+    ],
+    \CleaniqueCoders\LaravelExpiry\Events\ExpiredPassword::class => [
+        \CleaniqueCoders\LaravelExpiry\Listeners\LogoutOnExpired::class,
+    ],
+],
 ```
 
-## Test
+#### Handling Events
 
-Run the following command:
+The package automatically registers these events and listeners. You can modify or extend the behaviour by updating the configuration file.
+
+For example, when a user's account or password expires:
+
+- The **`ExpiredAccount`** or **`ExpiredPassword`** event is triggered.
+- The **`LogoutOnExpired`** listener handles these events by logging the user out.
+
+#### Customising Listeners
+
+To add custom listeners for these events, update the configuration file (`config/laravel-expiry.php`):
+
+```php
+'events' => [
+    \CleaniqueCoders\LaravelExpiry\Events\ExpiredAccount::class => [
+        \App\Listeners\YourCustomListener::class,
+    ],
+    \CleaniqueCoders\LaravelExpiry\Events\ExpiredPassword::class => [
+        \App\Listeners\YourCustomListener::class,
+    ],
+],
+```
+
+With this setup, the package makes it easy to integrate custom logic for handling expiry events.
+
+---
+
+## Testing
+
+To run the test suite, use the following command:
 
 ```bash
-vendor/bin/phpunit  --testdox --verbose
+vendor/bin/pest --testdox
 ```
+
+The package is fully tested with PestPHP to ensure reliability.
+
+---
 
 ## Contributing
 
-Thank you for considering contributing to the `cleaniquecoders/laravel-expiry`!
+Thank you for considering contributing to `cleaniquecoders/laravel-expiry`. Contributions are welcome and appreciated!
 
-### Bug Reports
+### Reporting Bugs
 
-To encourage active collaboration, it is strongly encourages pull requests, not just bug reports. "Bug reports" may also be sent in the form of a pull request containing a failing test.
+If you find a bug, you can either:
 
-However, if you file a bug report, your issue should contain a title and a clear description of the issue. You should also include as much relevant information as possible and a code sample that demonstrates the issue. The goal of a bug report is to make it easy for yourself - and others - to replicate the bug and develop a fix.
+- Submit a pull request with a failing test case.
+- Create an issue describing the problem clearly with steps to reproduce it.
 
-Remember, bug reports are created in the hope that others with the same problem will be able to collaborate with you on solving it. Do not expect that the bug report will automatically see any activity or that others will jump to fix it. Creating a bug report serves to help yourself and others start on the path of fixing the problem.
+### Coding Style
 
-## Coding Style
+The package follows **PSR-2** coding standards and **PSR-4** autoloading.
 
-`cleaniquecoders/laravel-expiry` follows the PSR-2 coding standard and the PSR-4 autoloading standard.
+---
 
 ## License
 
-This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+This package is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
