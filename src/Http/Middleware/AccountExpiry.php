@@ -18,9 +18,6 @@ class AccountExpiry
             event(
                 new \CleaniqueCoders\LaravelExpiry\Events\ExpiredAccount(auth()->user())
             );
-            auth()->logout();
-
-            throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredAccountException;
         }
 
         return $next($request);

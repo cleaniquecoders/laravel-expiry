@@ -2,20 +2,33 @@
 
 namespace CleaniqueCoders\LaravelExpiry\Tests;
 
-class TestCase extends \Orchestra\Testbench\TestCase
-{
-    use Traits\TestCaseTrait;
+use CleaniqueCoders\LaravelExpiry\LaravelExpiryServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Orchestra\Testbench\TestCase as Orchestra;
 
-    /**
-     * Load Package Service Provider.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return array List of Service Provider
-     */
+class TestCase extends Orchestra
+{
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Factory::guessFactoryNamesUsing(
+            fn (string $modelName) => 'Workbench\\Database\\Factories\\'.class_basename($modelName).'Factory'
+        );
+    }
+
     protected function getPackageProviders($app)
     {
         return [
-            \CleaniqueCoders\LaravelExpiry\LaravelExpiryServiceProvider::class,
+            LaravelExpiryServiceProvider::class,
         ];
+    }
+
+    public function getEnvironmentSetUp($app)
+    {
+        config()->set('database.default', 'testing');
+
+        // $migration = include __DIR__.'/../database/migrations/add_expiry_columns.php.stub';
+        // $migration->up();
     }
 }

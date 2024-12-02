@@ -18,9 +18,6 @@ class PasswordExpiry
             event(
                 new \CleaniqueCoders\LaravelExpiry\Events\ExpiredPassword(auth()->user())
             );
-            auth()->logout();
-
-            throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredPasswordException;
         }
 
         return $next($request);
