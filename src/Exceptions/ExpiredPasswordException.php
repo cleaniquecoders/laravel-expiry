@@ -4,6 +4,4 @@ namespace CleaniqueCoders\LaravelExpiry\Exceptions;
 
 use Exception;
 
-class ExpiredPasswordException extends Exception
-{
-}
+class ExpiredPasswordException extends Exception {}

@@ -20,7 +20,7 @@ class AccountExpiry
             );
             auth()->logout();
 
-            throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredAccountException();
+            throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredAccountException;
         }
 
         return $next($request);

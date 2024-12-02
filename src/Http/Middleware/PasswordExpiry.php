@@ -20,7 +20,7 @@ class PasswordExpiry
             );
             auth()->logout();
 
-            throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredPasswordException();
+            throw new \CleaniqueCoders\LaravelExpiry\Exceptions\ExpiredPasswordException;
         }
 
         return $next($request);

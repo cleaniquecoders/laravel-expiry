@@ -19,7 +19,5 @@ class LaravelExpiryServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
-    {
-    }
+    public function register() {}
 }

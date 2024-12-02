@@ -14,7 +14,7 @@
             "CleaniqueCoders\\LaravelExpiry\\": "src/"
         },
         "files": [
-            "src/Support/helpers.php"
+            "support/helpers.php"
         ]
     },
     "autoload-dev": {
