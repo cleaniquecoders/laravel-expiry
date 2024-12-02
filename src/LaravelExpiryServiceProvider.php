@@ -2,22 +2,15 @@
 
 namespace CleaniqueCoders\LaravelExpiry;
 
-use Illuminate\Support\ServiceProvider;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Spatie\LaravelPackageTools\Package;
 
-class LaravelExpiryServiceProvider extends ServiceProvider
+class LaravelExpiryServiceProvider extends PackageServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     */
-    public function boot()
+    public function configurePackage(Package $package): void
     {
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations'),
-        ], 'laravel-expiry-migrations');
+        $package
+            ->name('laravel-expiry')
+            ->hasMigration('add_expiry_columns');
     }
-
-    /**
-     * Register the application services.
-     */
-    public function register() {}
 }
