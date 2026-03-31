@@ -2,6 +2,24 @@
 
 All notable changes to `Laravel Expiry` will be documented in this file.
 
+## 2.3.0 - 2026-03-31
+
+### What's Changed
+
+#### Added
+
+- Laravel 13 support (illuminate constraints include `^13.0`)
+- PHPUnit 12 compatibility
+- Pest 4 support
+
+#### Changed
+
+- Updated `phpunit.xml.dist` for PHPUnit 12
+- Standardized CI workflow (Laravel 12 + PHP 8.4/8.3)
+- Updated dev dependencies (larastan, phpstan plugins, collision)
+
+**Full Changelog**: https://github.com/cleaniquecoders/laravel-expiry/compare/2.2.0...2.3.0
+
 ## Added Laravel 12 and PHP 8.4 Support - 2025-05-01
 
 ### What's Changed
